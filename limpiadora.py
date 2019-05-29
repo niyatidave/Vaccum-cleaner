@@ -7,6 +7,14 @@ import random
 9 left
 '''
 
+class Place:
+    def __init__ (self,par_location,par_dirty):
+        self.location = par_location
+        if(par_dirty == 1):
+            self.status = 'Dirty'
+        else:
+            self.status = 'Clean'
+
 
 class Agent:
     def __init__ (self):
@@ -24,22 +32,28 @@ class Agent:
         
     def clean (self,arr):
         while (self.i!=4):
-            if(arr[self.i][self.j] == 1):
+            if(arr[self.i][self.j].status == 'Dirty'):
                 self.suck(arr)
-            elif (self.j == 0):
+            elif (arr[self.i][self.j].location == 'A'):
                 self.right()
             else:
                 self.left()
         self.restart()
         
     def suck(self,arr):
-        arr[self.i][self.j] = 0
+        arr[self.i][self.j].status = 'Clean'
         return
     
     def restart(self):
         self.i = 0
         self.j = 0
         
+def PrintMatrix(matrix):
+    for row in matrix:
+        for Lugar in row:
+            print(Lugar.status)
+    
+    
 matrix=[]
 
 def generateRandom():
@@ -47,14 +61,20 @@ def generateRandom():
 
 def getDirt():
     for i in range(0,4):
-        matrix.append([generateRandom(),generateRandom()])
+        matrix.append([Place('A',generateRandom()),Place('B',generateRandom())])
     return matrix
 
 agent = Agent()
 
 for j in range(0,4):
     matrix = getDirt()
-    print(matrix)
+    matrix[0][0].status = 'Dirty'
+    print("Antes de limpiar")
+    PrintMatrix(matrix)
     agent.clean(matrix)
-    print(matrix)
+    print("Despues de limpiar")
+    PrintMatrix(matrix)
+    print("Corrida numero",j)
     matrix=[]
+    
+
