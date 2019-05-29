@@ -1,3 +1,4 @@
+import time
 import random
 '''
 0 limpio
@@ -70,10 +71,12 @@ for j in range(0,4):
     matrix = getDirt()
     matrix[0][0].status = 'Dirty'
     print("Antes de limpiar")
-    PrintMatrix(matrix)
+    #PrintMatrix(matrix)
+    starting_point = time.time()
     agent.clean(matrix)
-    print("Despues de limpiar")
-    PrintMatrix(matrix)
+    elapsed_time = time.time () - starting_point
+    print("Despues de limpiar, y tardo",elapsed_time,"segundos")
+    #PrintMatrix(matrix)
     print("Corrida numero",j)
     matrix=[]
     
