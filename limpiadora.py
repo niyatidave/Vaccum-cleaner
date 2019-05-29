@@ -1,12 +1,7 @@
 import time
 import random
-'''
-0 limpio
-1 sucio
-7 clean
-8 right
-9 left
-'''
+
+
 
 class Place:
     def __init__ (self,par_location,par_dirty):
@@ -71,12 +66,12 @@ for j in range(0,4):
     matrix = getDirt()
     matrix[0][0].status = 'Dirty'
     print("Antes de limpiar")
-    #PrintMatrix(matrix)
+    PrintMatrix(matrix)
     starting_point = time.time()
     agent.clean(matrix)
     elapsed_time = time.time () - starting_point
     print("Despues de limpiar, y tardo",elapsed_time,"segundos")
-    #PrintMatrix(matrix)
+    PrintMatrix(matrix)
     print("Corrida numero",j)
     matrix=[]
     
