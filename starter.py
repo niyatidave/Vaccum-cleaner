@@ -9,6 +9,9 @@ class WumpusWorld:
         self.plans = plans
         self.rooms = rooms
 
+    def __repr__(self):
+        return f"-> {self.wpos} , {self.rooms}"
+
 
 def get_neighbours(x, y):
     return [(x+1, y), (x-1, y), (x, y-1), (x, y+1)]
@@ -80,11 +83,12 @@ def loadWW(filename):
             return WumpusWorld("FINDPLAN", map=map, rooms=rooms, wpos=cpos)
 
 if __name__ == "__main__":
-    # ww = loadWW('example-problem080.txt')
-    # # pc.check_plan_with_cleaner(ww)
+    ww = loadWW('example-problem060.txt')
+    print(ww)
+    print(pc.check_plan_with_cleaner(ww))
     # plan = pf.find_plan(ww)
     # print(plan)
 
-    ww = loadWW('example-problem080.txt')
+    # ww = loadWW('example-problem080.txt')
     # pc.check_plan_with_cleaner(ww)
-    pc.planB(ww)
+    # pc.planB(ww)

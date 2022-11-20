@@ -34,13 +34,70 @@ def implement_plan(start_cord, plan, room, map):
 	return croom
 
 
+def check_plan_with_random_pos(plan, room, map):
+	rpos = random.choice(room)
+	return rpos, implement_plan(rpos, plan, room, map)
+
+
 def check_plan_with_cleaner(ww):
-	for k, v in ww.wpos.items():
-		croom = implement_plan(v, ww.plans, ww.rooms[k], ww.map)
-		if len(croom) > 0:
-			print("BAD PLAN", croom)
-		else:
-			print("GOOD PLAN", croom)
+	# here we have to check if cleaner exist or not
+	ncl = len(ww.wpos) # number of clearner
+	if ncl == 0:
+		# no cleaner -> number of room one / two
+		# # of room one
+		if len(ww.rooms) == 1:
+			# iteratively check all with all position in room
+			room = list(ww.rooms.values())[0]
+			croom = None
+			isGoodPlan = False
+			for pos in room:
+				croom = implement_plan(pos, ww.plans, room, ww.map)
+				if len(croom) == 0:
+					isGoodPlan = True
+					return "GOOD PLAN", croom, pos
+
+			# so there is no good plan then randomly select a pos and get plan
+			rpos, croom = check_plan_with_random_pos(ww.plans, room, ww.map)
+			return "BAD PLAN", croom, rpos
+
+		if len(ww.rooms) == 2:
+			# iteratively check all with all position in room
+			rooms = list(ww.rooms.values())
+			for room in rooms:
+				# check for every room
+				croom = None
+				isGoodPlan = False
+				for pos in room:
+					croom = implement_plan(pos, ww.plans, room, ww.map)
+					if len(croom) == 0:
+						isGoodPlan = True
+						return "GOOD PLAN", croom, pos
+
+			# so there is no good plan then randomly select a pos and get plan
+			rpos, croom = check_plan_with_random_pos(ww.plans, room[0], ww.map)
+			return "BAD PLAN", croom, rpos
+	# number of cleaner one
+	elif ncl == 1:
+		# number of rooms is one
+		if len(ww.rooms) == 1:
+			cpos = list(ww.wpos.values())[0]
+			room = list(ww.rooms.values())[0]
+			croom = implement_plan(cpos, ww.plans, room, ww.map)
+			if len(croom) == 0:
+				return "GOOD PLAN", croom, cpos
+			else:
+				return "BAD PLAN", croom, cpos
+
+		# number of rooms is two
+		elif len(ww.rooms) == 2:
+			cpos = list(ww.wpos.values())[0]
+			room = list([r for r in ww.rooms.values() if cpos in r][0])
+			croom = implement_plan(cpos, ww.plans, room, ww.map)
+			if len(croom) == 0:
+				return "GOOD PLAN", croom, cpos
+			else:
+				return "BAD PLAN", croom, cpos
+
 
 
 def planB(ww):
