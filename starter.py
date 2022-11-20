@@ -1,4 +1,5 @@
 import planchecker as pc
+import planfinder as pf
 
 class WumpusWorld:
     def __init__(self, ptype, map, rooms, wpos = None, plans = None):
@@ -79,5 +80,7 @@ def loadWW(filename):
             return WumpusWorld("FINDPLAN", map=map, rooms=rooms, wpos=cpos)
 
 if __name__ == "__main__":
-    ww = loadWW('example-problem060.txt')
-    pc.check_plan_with_cleaner(ww)
+    ww = loadWW('example-problem080.txt')
+    # pc.check_plan_with_cleaner(ww)
+    plan = pf.find_plan(ww)
+    print(plan)
