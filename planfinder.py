@@ -16,13 +16,13 @@ def get_direction_by_move(pmove, nmove):
     x1, y1 = pmove
     x2, y2 = nmove
     if x2 - x1 == 1 and y2 - y1 == 0:
-        return 'S'
-    elif x1 - x2 == 1 and y1 - y2 == 0:
-        return 'N'
-    elif x1 - x2 == 0 and y2 - y1 == 1:
         return 'E'
-    elif x1 - x2 == 0 and y1 - y2 == 1:
+    elif x1 - x2 == 1 and y1 - y2 == 0:
         return 'W'
+    elif x1 - x2 == 0 and y2 - y1 == 1:
+        return 'S'
+    elif x1 - x2 == 0 and y1 - y2 == 1:
+        return 'N'
 
 def find_plan_with_cleaner_position(map, cpos, room):
     cmap = copy.deepcopy(map)
@@ -58,9 +58,17 @@ def find_plan(ww):
     elif ncleaner == 0:
         # now room number might be one or two
         if len(ww.rooms) == 1:
-            room = list(ww.rooms.values())[0]
-            rcpos = random.choice(list(room))
-            return find_plan_with_cleaner_position(map, rcpos, room)
+            room = list(list(ww.rooms.values())[0])
+            # rcpos = random.choice(list(room))
+            min_path = find_plan_with_cleaner_position(map, room[0], set(room))
+            print(f"path from {0} -- {min_path}")
+            for cor in range(1, len(room)):
+                path = find_plan_with_cleaner_position(map, room[cor], set(room))
+                print(f"path from {cor} -- {path}")
+                if len(path) < len(min_path):
+                    min_path = path
+            #return find_plan_with_cleaner_position(map, rcpos, room)
+            return min_path
         elif len(ww.rooms) == 2:
             #TODO: Please do for two diff rooms
             pass

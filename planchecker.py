@@ -6,17 +6,17 @@ import copy
 def next_move(cord, map, direction):
 	# return next possible cordinate
 	x, y = cord
-	if direction == 'N' and map[x - 1][y] != 'X':
-		return (x - 1, y)
+	if direction == 'N' and map[x][y - 1] != 'X':
+		return (x, y - 1)
 
-	elif direction == 'E' and map[x][y + 1] != 'X':
-		return (x, y + 1)
-
-	elif direction == 'S' and map[x + 1][y] != 'X':
+	elif direction == 'E' and map[x + 1][y] != 'X':
 		return (x + 1, y)
 
-	elif direction == 'W' and map[x][y - 1] != 'X':
-		return (x, y - 1)
+	elif direction == 'S' and map[x][y + 1] != 'X':
+		return (x, y + 1)
+
+	elif direction == 'W' and map[x - 1][y] != 'X':
+		return (x - 1, y)
 
 	return cord
 

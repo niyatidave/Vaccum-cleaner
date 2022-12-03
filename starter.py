@@ -43,6 +43,10 @@ def update_rooms(map):
 
     return room_mapper
 
+#TODO: seperate all map reading code here
+def read_map():
+    pass
+
 def loadWW(filename):
     with open(filename, "r", encoding = 'utf-8') as f:
         lines = f.readlines()
@@ -56,6 +60,16 @@ def loadWW(filename):
             for i in range(2, len(lines)):
                 map.append(list(lines[i].strip()))
 
+
+            # transpose the matrix here row->col, col->row matrix = 16*12
+            tmap = []
+            for r in range(16): # number of preferd col
+                cv = []
+                for c in range(12): # number of row
+                    cv.append(map[c][r])
+                tmap.append(cv)
+
+            map = tmap
             rooms = update_rooms(map)
 
             # update cleaner position
@@ -71,6 +85,16 @@ def loadWW(filename):
             for i in range(1, len(lines)):
                 map.append(list(lines[i].strip()))
 
+            # transpose the matrix here row->col, col->row matrix = 16*12
+            tmap = []
+            for r in range(16):  # number of preferd col
+                cv = []
+                for c in range(12):  # number of row
+                    cv.append(map[c][r])
+                tmap.append(cv)
+
+            map = tmap
+
             rooms = update_rooms(map)
 
             # update cleaner position
@@ -83,12 +107,12 @@ def loadWW(filename):
             return WumpusWorld("FINDPLAN", map=map, rooms=rooms, wpos=cpos)
 
 if __name__ == "__main__":
-    ww = loadWW('example-problem060.txt')
+    ww = loadWW('example-problem201.txt')
     print(ww)
-    print(pc.check_plan_with_cleaner(ww))
-    # plan = pf.find_plan(ww)
-    # print(plan)
+    #print(pc.check_plan_with_cleaner(ww))
+    #plan = pf.find_plan(ww)
+    #print(plan)
 
     # ww = loadWW('example-problem080.txt')
     # pc.check_plan_with_cleaner(ww)
-    # pc.planB(ww)
+    pc.planB(ww)
