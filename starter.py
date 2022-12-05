@@ -34,7 +34,7 @@ def update_rooms(map):
     for i in range(len(map)):
         for j in range(len(map[0])):
             if map[i][j] == " ":
-                #mark all connected nodes
+                # mark all connected nodes
                 rooms = set()
                 curr_room = f"R{r}"
                 mark_connected_room(map, (i, j), curr_room, rooms)
@@ -109,9 +109,11 @@ def loadWW(filename):
 if __name__ == "__main__":
     ww = loadWW('example-problem201.txt')
     print(ww)
-    #print(pc.check_plan_with_cleaner(ww))
+    # print(pc.check_plan_with_cleaner(ww))
     #plan = pf.find_plan(ww)
     #print(plan)
+    #ww.plans = plan
+    #print("GOOD PLAN" == pc.check_plan_with_cleaner(ww)[0])
 
     # ww = loadWW('example-problem080.txt')
     # pc.check_plan_with_cleaner(ww)
